@@ -49,8 +49,8 @@ function getDeadResult(name, summary) {
   if (nameIndex !== -1) {
     stringToSearch = summary.substring(nameIndex + name.length);
   }
-  const wasIndex = stringToSearch.indexOf('was');
-  const isIndex = stringToSearch.indexOf('is');
+  const wasIndex = stringToSearch.indexOf(' was ');
+  const isIndex = stringToSearch.indexOf(' is ');
   if (wasIndex !== -1 && isIndex !== -1) {
     return {
       unknown: false,
