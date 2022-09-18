@@ -100,10 +100,10 @@ async function getWikipediaResult(argName) {
 function properCase(argName) {
   const splitNames = argName.split(' ');
   const uppercasedSplitNames = splitNames.map((name) => {
-    if (name) {
+    if (name?.length > 1) {
       return `${name[0].toUpperCase()}${name.substring(1)}`; 
     }
-    return '';
+    return name;
   });
   let properName = '';
   uppercasedSplitNames.forEach((name) => {
