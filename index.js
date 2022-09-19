@@ -22,7 +22,7 @@ async function initialize(queryArg) {
   if (queryArg) {
     const wikipediaResult = await getWikipediaResult(queryArg);
     if (!wikipediaResult.error) {
-      const deadResult = getDeadResult(queryArg, wikipediaResult.summary);
+      const deadResult = getDeadResult(wikipediaResult.summary);
       if (deadResult.unknown) {
         answer.textContent = 'Maybe…';
       } else if (deadResult.isDead) {
@@ -38,17 +38,11 @@ async function initialize(queryArg) {
   }
 }
 
-// getDeadResult returns whether or not the given noun, given by
-// [name], is dead or not based upon the given [summary]. It does this
-// by determining whether the word "was" appears before the word "is." In
-// case the [name] also contains the word "was" or "is," it starts searching
-// through the summary after the first instance of [name] is written.
-function getDeadResult(name, summary) {
-  let stringToSearch = summary.toLowerCase();
-  const nameIndex = stringToSearch.indexOf(name.toLowerCase());
-  if (nameIndex !== -1) {
-    stringToSearch = summary.substring(nameIndex + name.length);
-  }
+// getDeadResult returns whether or not the given [summary] describes a noun
+// that is dead or live. It does this by determining whether the word "was"
+// appears before the word "is."
+function getDeadResult(summary) {
+  const stringToSearch = summary.toLowerCase();
   const wasIndex = stringToSearch.indexOf(' was ');
   const isIndex = stringToSearch.indexOf(' is ');
   if (wasIndex !== -1 && isIndex !== -1) {
